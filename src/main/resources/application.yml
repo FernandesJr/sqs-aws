@@ -1,0 +1,15 @@
+server:
+  port: 8083
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+      auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key: AKIASZ3H5CUFPNOAUAJH
+      secret-key: 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
+    end-point:
+      uri: https://sqs.us-east-1.amazonaws.com/192954569994/filaTest
