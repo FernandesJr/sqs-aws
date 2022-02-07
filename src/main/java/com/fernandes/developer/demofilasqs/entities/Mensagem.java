@@ -2,13 +2,21 @@ package com.fernandes.developer.demofilasqs.entities;
 
 import com.fernandes.developer.demofilasqs.dto.MensagemDTO;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_mensagem")
 public class Mensagem implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
+
+    @Column(columnDefinition = "TEXT")
     private String texto;
 
     public Mensagem(){}
