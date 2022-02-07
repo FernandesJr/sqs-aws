@@ -39,7 +39,7 @@ public class MensagemDTO implements Serializable {
         this.texto = texto;
     }
 
-    public String msgJson(){
+    public String msgToJson(){
         return "{\"titulo\":\""+this.titulo+"\",\"texto\":\""+texto+"\"}";
     }
 }

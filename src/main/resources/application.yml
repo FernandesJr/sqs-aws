@@ -9,7 +9,7 @@ cloud:
     stack:
       auto: false
     credentials:
-      access-key: your key
-      secret-key: your key
+      access-key: youKey
+      secret-key: youKey
     end-point:
       uri: yourQueue

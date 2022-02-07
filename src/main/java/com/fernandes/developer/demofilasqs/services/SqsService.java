@@ -13,8 +13,16 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 @Service
-public class SqsService {
+public class SqsService implements ActionListener {
+
+    public SqsService(){
+        this.timeToSearch();
+    }
 
     @Autowired
     private QueueMessagingTemplate queueMessagingTemplate;
@@ -25,23 +33,58 @@ public class SqsService {
     @Autowired
     private MensagemRepository mensagemRepository;
 
+    private Integer TIME_TO_SEARCH_QUEUE = 60000; //5 min == 300000 ms
+
     public void sendMensagemToQueue(MensagemDTO dto){
-        queueMessagingTemplate.send(endPoint, MessageBuilder.withPayload(dto.msgJson()).build());
+        this.queueMessagingTemplate.send(endPoint, MessageBuilder.withPayload(dto.msgToJson()).build());
     }
 
-    @SqsListener(value = "filaTest", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
-    public void listenQueue(String message){
+    public void listenQueue(){
         try{
-            Mensagem mensagem = new Gson().fromJson(message, Mensagem.class);
-            saveMessage(mensagem);
-        }catch (IllegalArgumentException e){
-            System.out.println(e);
+            System.out.println("LISTEN-QUEUE");
+            Mensagem mensagem = this.queueMessagingTemplate.receiveAndConvert(endPoint, Mensagem.class);
+            if(!mensagem.IsEmpty()){
+                this.saveMessage(mensagem);
+            }
+            while (!mensagem.IsEmpty()){
+                Mensagem mensagemSubSequentes = this.queueMessagingTemplate.receiveAndConvert(endPoint, Mensagem.class);
+                if(mensagemSubSequentes.IsEmpty()){
+                    mensagem.setEmpty();
+                }else{
+                    this.saveMessage(mensagemSubSequentes);
+                }
+            }
+        }catch (NullPointerException e){
+            System.out.println("Fila vazia: "+e);
         }
-
     }
 
     @Transactional
     private void saveMessage(Mensagem mensagem) {
-        mensagemRepository.save(mensagem);
+        this.mensagemRepository.save(mensagem);
     }
+
+    public void timeToSearch(){
+        Timer time = new Timer(TIME_TO_SEARCH_QUEUE, this); //1K = 1s
+        time.start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.listenQueue();
+    }
+
+    //Buscar as mensagens de forma automática
+    /*
+    @SqsListener(value = "filaTest", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
+    public void listenQueue(String message){
+        try{
+            //A mensagem foi salva em formato Json, sendo assim aqui converte-se para objeto java
+            Mensagem mensagem = new Gson().fromJson(message, Mensagem.class);
+            //Salvando no banco de dados
+            saveMessage(mensagem);
+        }catch (IllegalArgumentException e){
+            System.out.println(e);
+        }
+    }*/
 }

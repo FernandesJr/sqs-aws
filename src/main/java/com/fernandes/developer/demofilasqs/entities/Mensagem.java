@@ -67,4 +67,12 @@ public class Mensagem implements Serializable {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public boolean IsEmpty() {
+        return this.titulo == null;
+    }
+
+    public void setEmpty(){
+        this.titulo = null;
+    }
 }
