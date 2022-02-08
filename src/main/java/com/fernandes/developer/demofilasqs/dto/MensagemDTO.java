@@ -1,5 +1,7 @@
 package com.fernandes.developer.demofilasqs.dto;
 
+import com.fernandes.developer.demofilasqs.entities.Mensagem;
+
 import java.io.Serializable;
 
 public class MensagemDTO implements Serializable {
@@ -13,6 +15,12 @@ public class MensagemDTO implements Serializable {
     public MensagemDTO(String titulo, String texto) {
         this.titulo = titulo;
         this.texto = texto;
+    }
+
+    public MensagemDTO(Mensagem mensagem) {
+        this.id = mensagem.getId();
+        this.titulo = mensagem.getTitulo();
+        this.texto = mensagem.getTexto();
     }
 
     public Long getId() {

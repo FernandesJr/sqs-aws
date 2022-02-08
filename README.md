@@ -46,4 +46,13 @@
     "texto":"Este end-point envia uma mensagem para uma fila da aws-sqs, e em no máximo 5 minutos a aplicação salvará a mensagem no banco de dados."
  } 
 ~~~
+
+ Verbo http **GET**
+ http://localhost:8080/mensagens?page=0&size=3&sort=asc
+
+ * Busca todas as mensagens salvas no banco de dados de forma paginada.
+ Opcionalmente pode conter os parâmetros; 
+   * page - página desejada
+   * size - quantidade de mensagens por página
+   * sort - ordenação das mensagens podendo ser asc (Ascendente) ou desc (Decrescente)
 ***
