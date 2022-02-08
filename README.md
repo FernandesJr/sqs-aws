@@ -25,13 +25,13 @@
     end-point:
       uri: your queue
 ~~~
- [Veja aqui](https://github.com/FernandesJr/sqs-aws/blob/main/src/main/resources/application.yml)
+  [Veja aqui](https://github.com/FernandesJr/sqs-aws/blob/main/src/main/resources/application.yml)
 
 
  * Banco de dados
  
- Você irá precisar de um servidor MySql rodando na sua máquina
- [Veja aqui as configurações](https://github.com/FernandesJr/sqs-aws/blob/main/src/main/resources/application.yml)
+  Você irá precisar de um servidor MySql rodando na sua máquina
+  [Veja aqui as configurações](https://github.com/FernandesJr/sqs-aws/blob/main/src/main/resources/application.properties)
 
  ***
  ## EndPoint
@@ -43,7 +43,7 @@
 ~~~
  {
     "titulo":"Enviar mensagem para a aws-sqs",
-    "texto":"Este end-point envia uma mensagem para uma fila da aws-sqs, e em no máximo 5 minutos a aplicação salvara a mensagem no banco de dados."
+    "texto":"Este end-point envia uma mensagem para uma fila da aws-sqs, e em no máximo 5 minutos a aplicação salvará a mensagem no banco de dados."
  } 
 ~~~
 ***
