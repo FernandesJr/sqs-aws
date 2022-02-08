@@ -16,7 +16,7 @@ public class SqsResource {
     @PostMapping
     public ResponseEntity<Void> sendToQueue(@RequestBody MensagemDTO mensagemDTO){
         service.sendMensagemToQueue(mensagemDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

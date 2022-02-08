@@ -42,6 +42,7 @@ public class SqsService implements ActionListener {
     public void listenQueue(){
         try{
             System.out.println("LISTEN-QUEUE");
+            //Buscar as mensagens da fila sqs
             Mensagem mensagem = this.queueMessagingTemplate.receiveAndConvert(endPoint, Mensagem.class);
             if(!mensagem.IsEmpty()){
                 this.saveMessage(mensagem);
