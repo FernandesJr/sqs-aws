@@ -33,7 +33,7 @@ public class SqsService implements ActionListener {
     @Autowired
     private MensagemRepository mensagemRepository;
 
-    private Integer TIME_TO_SEARCH_QUEUE = 60000; //5 min == 300000 ms
+    private Integer TIME_TO_SEARCH_QUEUE = 300000; //5 min == 300000 ms
 
     public void sendMensagemToQueue(MensagemDTO dto){
         this.queueMessagingTemplate.send(endPoint, MessageBuilder.withPayload(dto.msgToJson()).build());
